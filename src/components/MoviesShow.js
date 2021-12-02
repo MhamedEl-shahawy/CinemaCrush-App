@@ -3,17 +3,17 @@ import { useState, useEffect } from 'react';
 
 import {MoviesContainer,Title,Movies,MovieContainer,Movie,MovieTitle,Img} from "./style/MoviesStyle";
 import useFetchMovies from "../hooks/useFetchMovies";
-function MoviesShow({movieType,titlePage}) {
+function MoviesShow({movieType,titlePage,imageSetter}) {
     const { id } = useParams();
     const [movieUrl,setMovieUrl]=useState(movieType)
     const { error, isPending, data } = useFetchMovies(movieUrl);
+
   useEffect(()=>{
     if(id){
-     setMovieUrl(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=400225a1886f38d9cf3c934d6a756c4d`);   
+     setMovieUrl(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=986eb324dbd60d6f95d44380dfbe9ae7`);   
      console.log(id);
     }else{
-     console.log(id);
-
+       imageSetter("");
        setMovieUrl(movieType);
     }
   },[id,movieType])
@@ -36,7 +36,7 @@ function MoviesShow({movieType,titlePage}) {
              <Movie>
                <MovieTitle>{movie.title}</MovieTitle>  
             </Movie>  
-            <Img src={"https://image.tmdb.org/t/p/original"+movie.poster_path}/> 
+            <Img src={"https://image.tmdb.org/t/p/w500"+movie.poster_path}/> 
               </Link>
          </MovieContainer> 
        

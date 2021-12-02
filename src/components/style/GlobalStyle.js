@@ -6,13 +6,13 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
   
-    background: ${({theme})=> theme.colors.main};
+    background:${({theme,urlImage})=> urlImage ? "center center / cover no-repeat": theme.colors.main};
+    background-image: url(${({urlImage})=>urlImage});
     color: hsl(192, 100%, 9%);
     font-family: 'Poppins', sans-serif;
     font-size: 1.15em;
     margin: 0;
     overflow-x:hidden;
-    padding:2em;
   }
   
   img {
@@ -23,7 +23,7 @@ a{
    color:${({theme})=> theme.colors.primary};
    transition:all ease-in-out 0.5s;
    &:hover{
-     text-decoration:underline;
+      border-bottom: 1px dotted #555;
      color:#888;
    }
 }

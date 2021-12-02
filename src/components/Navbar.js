@@ -1,6 +1,7 @@
 import {Nav,Header,Img,List,ListElement,HeadIntro,Title,IntroDesc} from "./style/Nav.js"
-import {Link} from "react-router-dom"
-function Navbar({logo}) {
+import {Link} from "react-router-dom"; 
+
+function Navbar({logo,id}) {
   return (
     <>
         <Header>
@@ -13,10 +14,14 @@ function Navbar({logo}) {
               <ListElement><Link to="upcoming">UpComing</Link></ListElement>
             </List>
           </Nav>
+          <>
+          { !id &&
           <HeadIntro>
             <Title>Latest movies and movie trailers</Title>
             <IntroDesc>CinemaCrush is your beautiful collection of popular, top rated, box office and upcoming movies. Discover latest movie trailers and reviews. Show your LOVE of movies.</IntroDesc>
-          </HeadIntro> 
+          </HeadIntro>
+          } 
+          </>
         </Header>
     </>
   );

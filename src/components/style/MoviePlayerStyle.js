@@ -29,32 +29,33 @@ export const Title = styled.h2`
 export const Container = styled.div`
   width:100%;
   display:grid;
-  grid-template-columns:repeat(1,1fr 3fr);
+  grid-template-columns:repeat(1,1fr 2fr);
   gap:0.5em;
   padding:0.5em;
+    @media (max-width:900px) {
+    display:block;
+    
+   
+  }
 
 `;
 export const Img = styled.img`
-  width:100%;
-  height:100%;
+ 
 `;
 export const Description = styled.div`
    width:100%;
    height:100%;
 `;
 export const FilmCast = styled.div`
-   width:100%;
-   display:grid;
-   grid-template-columns:repeat(2,1fr);
+
    margin-bottom:2em;
 `;
 export const FilmCastContainer = styled.div`
    width:100%;
 `;
 export const Lists = styled.div`
-width:100%;
   span{
-  	 color:#2C2C2A;
+  	 color:#777;
   	 font-size:20px;
   	     font-family: light;
   	     font-weight:500;
@@ -62,15 +63,24 @@ width:100%;
 `;
 export const List = styled.div`
     margin-top:30px; 
+     color:#fff;
+     span{
+      border-bottom: 1px dotted #555;
+
+     }
 `;
 export const CastNamesWrapper = styled.ul`
   display:flex;
+    flex-wrap: wrap;
+    line-height: 2;
+    margin-left: -38px;
 `;
 export const CastNames = styled.li`
-  margin-left:5px;
+  margin-right:10px;
+
 `; 
 export const MovieDescriptionTitle =styled.h4`
-   color:#2C2C2A;
+   color:#777;
    margin-top:0.5em;
 `; 
 export const MovieDescription = styled.p`

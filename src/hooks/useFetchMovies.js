@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 const useFetchMovies = (url) => {
   const [data, setData] = useState([]);
+  const [dataMovie, setDataMovie] = useState([]);
+  const [dataMovieCast, setdataMovieCast] = useState([]);  
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,7 +17,8 @@ const useFetchMovies = (url) => {
       })
       .then(data => {
         setIsPending(false);
-        setData(data.results);
+        setData(data.results || data.cast);;
+        setDataMovie(data);
         setError(null);
       })
       .catch(err => {
@@ -25,8 +28,7 @@ const useFetchMovies = (url) => {
       })
     }, 1000);
   }, [url])
-  console.log(data)
-  return { data, isPending, error };
+  return { data, dataMovie,isPending, error };
 }
  
 export default useFetchMovies;

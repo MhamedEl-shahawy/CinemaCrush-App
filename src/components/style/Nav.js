@@ -1,12 +1,16 @@
 import styled from "styled-components";
 export const Header = styled.header`
    max-width:1440px;
-   color:${({theme})=> theme.colors.primary}
+   color:${({theme})=> theme.colors.primary};
 `;
 export const Nav = styled.nav`
    width:100%;
    display:flex;
-   align-items:center
+   align-items:center;
+      background-color:${({theme})=> theme.colors.main};
+         padding:2em;
+
+
 `;
 export const Img = styled.img`
   margin-rigth:2em;
@@ -24,6 +28,8 @@ export const HeadIntro = styled.div`
    width:100%;
    margin-top:2em;
    font-family:regular, Arial, Helvetica, sans-serif;
+      padding:2em;
+
 
 `;
 export const Title = styled.h2`

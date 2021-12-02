@@ -20,7 +20,7 @@ export const Movies = styled.div`
       grid-column: span 2;
       grid-row: span 2;
    }
-   @media (max-width: 768px) {
+   @media (max-width: 900px) {
     display:block;
     
    
@@ -60,7 +60,6 @@ export const MovieTitle = styled.h3`
 `;
 export const Img = styled.img`
   width:100%;
-  height:100%;
    
 `;
 // MoviesContainer,Title,Movies,Movie,Img
