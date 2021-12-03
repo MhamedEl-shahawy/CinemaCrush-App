@@ -92,3 +92,45 @@ export const MovieDescription = styled.p`
 export const MovieDescriptionWrapper = styled.div`
   margin-top:2em;
 `;
+export const Poster = styled.div`
+   width:100%;
+   height:100%;
+   position:absolute;
+   top:0%;
+   left:0%;
+    display:flex;
+    align-items:flex-start;
+    justify-content:cenetr;
+   padding:2em;
+   background-color:rgba(0,0,0,0.7);
+   z-index:999;
+   display:none;
+`;
+export const VideoTrailer = styled.div`
+   width:100%;
+   height:100%;
+   position:absolute;
+   top:0%;
+   left:0%;
+    display:flex;
+    align-items:flex-start;
+    justify-content:cenetr;
+   padding:2em;
+   background-color:rgba(0,0,0,0.7);
+   z-index:999; 
+   display:none;
+ 
+
+`;
+export const VideoTrailerContainer = styled.div`
+      margin:0 auto;
+       z-index:999; 
+      border-radius:10px;
+      border:1em solid #777;
+`;
+
+export const PosterImg = styled.img`
+    margin:0 auto;
+   z-index:999;
+
+`;

@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.15em;
     margin: 0;
     overflow-x:hidden;
+    position:relative;
   }
   
   img {

@@ -1,15 +1,17 @@
-import {MovieCard,Title,Head,Container,Img,Description,FilmCast,Lists,List,MovieDescriptionTitle,MovieDescription,CastNames,MovieDescriptionWrapper,FilmCastContainer,CastNamesWrapper} from "./style/MoviePlayerStyle";
+import {MovieCard,Title,Head,Container,Img,Description,FilmCast,Lists,List,MovieDescriptionTitle,Poster,VideoTrailer,VideoTrailerContainer,PosterImg,MovieDescription,CastNames,MovieDescriptionWrapper,FilmCastContainer,CastNamesWrapper} from "./style/MoviePlayerStyle";
 import ven from "./images/ven.jpeg";
 import {Link,useParams} from "react-router-dom";
 import MoviesShow from "./MoviesShow";
 import { useState, useEffect } from 'react';
 import useFetchMovies from "../hooks/useFetchMovies";
 import useFetchCast from "../hooks/useFetchCast";
+import useFetchVideos from "../hooks/useFetchVideos";
 function MoviePlayer({imageSetter}){
   const {id} = useParams();
 
   const { error, isPending, dataMovie } = useFetchMovies(`https://api.themoviedb.org/3/movie/${id}?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
-    const {  dataMovieCast } = useFetchCast(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
+  const {  dataMovieCast } = useFetchCast(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
+  const {  dataMovieTrailer } = useFetchVideos(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
   const [genres,setGenres] = useState([dataMovie.genres])
   const runtimeConverter =  (minutes) => {
   let h = Math.floor(minutes / 60);
@@ -29,7 +31,14 @@ imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.poster_path)
   return(
 
          <>           
-
+           <Poster>
+            <PosterImg src={"https://image.tmdb.org/t/p/w400"+dataMovie.poster_path}/>
+           </Poster>
+           <VideoTrailer>
+            <VideoTrailerContainer>
+            <iframe width="560" height="315" src={"https://www.youtube.com/embed/"+"6JnN1DmbqoU"} title={dataMovie.title} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </VideoTrailerContainer>
+           </VideoTrailer>
             <MovieCard>
           
               <Head>
