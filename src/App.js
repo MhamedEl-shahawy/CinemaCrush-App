@@ -9,6 +9,7 @@ import MoviePlayer from "./components/MoviePlayer"
 import GlobalStyle from "./components/style/GlobalStyle.js";
 import {WrapperContainer} from "./components/style/WrapperContainer.js";
 import Artist from "./components/Artist";
+import MoviesGenres from "./components/MoviesGenres";
 import Footer from "./components/Footer";
 function App() {
   const [image,setImage] = useState("");
@@ -34,6 +35,8 @@ function App() {
           <Route path='/upcoming' element={<MoviesShow   imageSetter={(url) => setImage(url) } titlePage="Upcoming Movies" movieType="https://api.themoviedb.org/3/movie/upcoming?page=1&api_key=986eb324dbd60d6f95d44380dfbe9ae7"/>} />
           <Route path='/movie/:id' element={<MoviePlayer imageSetter={(url) => setImage(url) } />} />
           <Route path="artist/:id" element={<Artist imageSetter={(url) => setImage(url) }/>} /> 
+          <Route path="/genres/:id" element={<MoviesGenres imageSetter={(url) => setImage(url) } />} /> 
+
           </Routes>
         <Footer logo={logo} />
         </WrapperContainer>

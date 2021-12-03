@@ -40,7 +40,7 @@ imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.profile_path)
                      <FilmCast>
                        <Lists>
                          <List><span>Birthdate</span> : {dataMovie.birthday}</List>
-                         <List><span>Release</span> :  {dataMovie.known_for_department}</List>
+                         <List><span>Art Type</span> :  {dataMovie.known_for_department}</List>
                        </Lists>
                           <Lists>
                        </Lists>

@@ -7,10 +7,10 @@ import useFetchMovies from "../hooks/useFetchMovies";
 import useFetchCast from "../hooks/useFetchCast";
 function MoviePlayer({imageSetter}){
   const {id} = useParams();
+
   const { error, isPending, dataMovie } = useFetchMovies(`https://api.themoviedb.org/3/movie/${id}?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
     const {  dataMovieCast } = useFetchCast(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
-
-  
+  const [genres,setGenres] = useState([dataMovie.genres])
   const runtimeConverter =  (minutes) => {
   let h = Math.floor(minutes / 60);
   let m = minutes % 60;
@@ -43,6 +43,8 @@ imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.poster_path)
                        <Lists>
                          <List><span>IMDB Rating</span> : {dataMovie.vote_average}</List>
                          <List><span>Release</span> :  {dataMovie.release_date}</List>
+                         <List><span>Genres</span> :  <Link to="/genres/">ss</Link></List>
+
                        </Lists>
                           <Lists>
                          <List><span>Runtime</span> :  {runtimeConverter(dataMovie.runtime)}</List>
