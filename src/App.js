@@ -36,6 +36,7 @@ function App() {
           <Route path='/movie/:id' element={<MoviePlayer imageSetter={(url) => setImage(url) } />} />
           <Route path="artist/:id" element={<Artist imageSetter={(url) => setImage(url) }/>} /> 
           <Route path="/genres/:id" element={<MoviesGenres imageSetter={(url) => setImage(url) } />} /> 
+          <Route path="*" element={<MoviesShow  imageSetter={(url) => setImage(url) }   movieType="https://api.themoviedb.org/3/movie/now_playing?page=5&api_key=986eb324dbd60d6f95d44380dfbe9ae7"/>} /> 
 
           </Routes>
         <Footer logo={logo} />
