@@ -40,7 +40,7 @@ export const Container = styled.div`
 
 `;
 export const Img = styled.img`
- 
+    width:100%;
 `;
 export const Description = styled.div`
    width:100%;

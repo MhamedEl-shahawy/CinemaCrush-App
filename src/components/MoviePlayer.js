@@ -52,7 +52,7 @@ imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.poster_path)
                        <Lists>
                          <List><span>IMDB Rating</span> : {dataMovie.vote_average}</List>
                          <List><span>Release</span> :  {dataMovie.release_date}</List>
-                         <List><span>Genres</span> :  <Link to="/genres/">ss</Link></List>
+                         <List><span>Genres</span> :  <Link to="/genres/">.......</Link></List>
 
                        </Lists>
                           <Lists>
