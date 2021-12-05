@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    
+    width:100%;
     background:${({theme,urlImage})=> urlImage ? "center center / cover no-repeat": theme.colors.main};
     background-image: url(${({urlImage})=>urlImage});
     color: hsl(192, 100%, 9%);

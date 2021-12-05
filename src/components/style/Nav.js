@@ -10,6 +10,16 @@ export const Nav = styled.nav`
       background-color:${({theme})=> theme.colors.main};
          padding:2em;
 
+         @media (max-width:999px){
+            display:block;
+                 text-align: center;
+                 padding:0;
+                padding: 1.5em 0;
+                
+                margin:0;
+             
+         }
+
 
 `;
 export const Img = styled.img`
@@ -18,11 +28,20 @@ export const Img = styled.img`
 export const List = styled.ul`
     display:flex;
     align-items:center;
+    @media (max-width:999px){
+    justify-content: center;  
+    }
 
 `;
 export const ListElement = styled.li`
    margin-left:1em;
+
    color:${({theme})=> theme.colors.primary};
+    @media (max-width:999px){
+      font-size: 0.8em;
+      margin:0;
+      margin-right:0.7em;
+    }
 `;
 export const HeadIntro = styled.div`
    width:100%;
