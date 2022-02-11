@@ -1,7 +1,10 @@
 import {Nav,Header,Img,List,ListElement,HeadIntro,Title,IntroDesc} from "./style/Nav.js"
-import {Link} from "react-router-dom"; 
+import {Link,useParams} from "react-router-dom"; 
 
-function Navbar({logo,id}) {
+function Navbar({logo}) {
+  const { id } = useParams();
+
+  
   return (
     <>
         <Header>
@@ -15,7 +18,7 @@ function Navbar({logo,id}) {
             </List>
           </Nav>
           <>
-          { !id &&
+          { id &&
           <HeadIntro>
             <Title>Latest movies and movie trailers</Title>
             <IntroDesc>CinemaCrush is your beautiful collection of popular, top rated, box office and upcoming movies. Discover latest movie trailers and reviews. Show your LOVE of movies.</IntroDesc>

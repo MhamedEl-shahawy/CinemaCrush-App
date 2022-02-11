@@ -14,23 +14,43 @@ export const Movies = styled.div`
    width:100%;
    display:grid;
    grid-template-columns:repeat(6,1fr);
-   gap:2px;
+   gap:0;
 
    &  div:nth-child(1) {
       grid-column: span 2;
       grid-row: span 2;
    }
-   @media (max-width: 900px) {
+   @media (max-width: 500px) {
     display:block;
-    
-   
+  }
+  @media screen and (min-width:500px) and (max-width: 900px) {
+    grid-template-columns:repeat(2,1fr);
+    grid-gap:1em;
+    &  div:nth-child(1) {
+      grid-column: span 1;
+      grid-row: span 1;
+      
+
+   }
   }
 
 `;
 export const MovieContainer = styled.div`
+     width: 100%;
+     height: 100%;
      position: relative;
-     &:hover h3{
+     &:hover{
+      box-shadow: 0 0 40px rgb(0 0 0 / 70%) inset, 0 0 10px rgb(0 0 0 / 50%), 0 0 60px rgb(255 255 255 / 25%);
+      h3{
      	 opacity:1;
+     }
+    }
+    a{
+      width: 100%;
+      height: 100%;
+    }
+     a:hover{
+       border:none;
      }
      @media (max-width: 768px) {
     margin-bottom:0.5em;
@@ -59,7 +79,8 @@ export const MovieTitle = styled.h3`
    opacity:0;
 `;
 export const Img = styled.img`
-  width:100%;
+  max-width:100%;
+  max-height: 100%;
    
 `;
 // MoviesContainer,Title,Movies,Movie,Img

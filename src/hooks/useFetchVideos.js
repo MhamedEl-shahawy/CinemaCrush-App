@@ -14,7 +14,6 @@ const useFetchVideos = (url) => {
       })
       .then(data => {
         setDataMovieTrailer(data.results);
-        console.log(dataMovieTrailer)
      
       })
       .catch(err => {

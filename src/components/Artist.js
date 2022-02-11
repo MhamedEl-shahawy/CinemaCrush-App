@@ -1,8 +1,7 @@
 import {MovieCard,Title,Head,Container,Img,Description,FilmCast,Lists,List,MovieDescriptionTitle,MovieDescription,CastNames,MovieDescriptionWrapper,FilmCastContainer,CastNamesWrapper} from "./style/MoviePlayerStyle";
-import ven from "./images/ven.jpeg";
-import {Link,useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import MoviesShow from "./MoviesShow";
-import { useState, useEffect } from 'react';
+import {useEffect } from 'react';
 import useFetchMovies from "../hooks/useFetchMovies";
 function Artist({imageSetter}){
   const {id} = useParams();
@@ -16,7 +15,6 @@ function Artist({imageSetter}){
   m = m < 10 ?  m  :  m; 
   return h +"h "+ m+"m";
 };
-
 
 imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.profile_path)
  useEffect(()=>{
@@ -49,10 +47,8 @@ imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.profile_path)
                        <MovieDescriptionWrapper>
                  <MovieDescriptionTitle>Bio</MovieDescriptionTitle>
                
-                 <MovieDescriptionTitle>{dataMovie.biography}</MovieDescriptionTitle>
-                 <MovieDescription>
-                  {dataMovie.overview}
-                 </MovieDescription>
+                 <MovieDescription>{dataMovie.biography}</MovieDescription>
+                
               </MovieDescriptionWrapper> 
                  </Description>
               </Container>

@@ -1,47 +1,35 @@
 import { useState, useEffect,useRef } from 'react';
-import {Link, useParams,useLocation } from "react-router-dom"; 
+import {Link, useParams } from "react-router-dom"; 
 import Loader from "./Loader";
 import {MoviesContainer,Title,Movies,MovieContainer,Movie,MovieTitle,Img} from "./style/MoviesStyle";
 import useFetchMovies from "../hooks/useFetchMovies";
 import Spinner from "./Spinner";
 
-function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
+function LoadMore({movieType,titlePage,imageSetter}) {
     const { id } = useParams();
-    const location = useLocation();
     const [movieUrl,setMovieUrl]=useState(movieType)
     const { error, isPending, data } = useFetchMovies(movieUrl);
     const [loadingFrame,setLoadingFrame] = useState(true);
-    const [moreMovies,setMoreMovies] = useState([]);
-    let [counter,setCounter] = useState(2);
      const imgRef = useRef(null);
     const onLoadFrame = ()=>{
       setLoadingFrame(false);
     }
-    const loadMore = ()=>{
-     
-      fetch(loadMoreUrl+`${counter}`+`${sort? sort:""}`+"&api_key=986eb324dbd60d6f95d44380dfbe9ae7")
+    const LoadingMore = ()=>{
+      fetch("")
       .then(res => {
         if (!res.ok) { // error coming back from server
           throw Error('could not fetch the data for that resource');
         } 
         return res.json();
       })
-      .then(db => {
-        const newLists = [...data,...moreMovies,...db.results];
-        let newCounter = counter+1;
-        
-        setCounter(newCounter);
-
-        let uniqueObjArray = [
-          ...new Map(newLists.map((item) => [item["id"], item])).values(),
-      ];
-        setMoreMovies([...uniqueObjArray]);
-
+      .then(data => {
+       
+    
     
       })
       .catch(err => {
         // auto catches network / connection error
-       
+      
       })
     };
   useEffect(()=>{
@@ -52,20 +40,7 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
        setMovieUrl(movieType);
     }
   },[id,movieType])
-   useEffect(()=>{
-      setMoreMovies([])
-   },[location]);
-//    useEffect(()=>{
-//    window.addEventListener('scroll', (event) => {
-//      console.log( document.body.clientWidth);
-//      console.log( window.pageYOffset);
-//      if(window.pageYOffset === document.body.clientWidth){
-     
-
-//     loadMore()
-//   }
-// },[])
-//   });
+    
   return (
     <>
     {isPending && <Loader/>}
@@ -78,7 +53,7 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
    
          <Movies>
 
-         {(moreMovies.length > 0 ? moreMovies:data).map( (movie,i) =>(
+         {data.map( (movie,i) =>(
         
           <MovieContainer key={movie.id+i}>
             <Link to={`/movie/${movie.id}`}>
@@ -98,7 +73,7 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
          
 
 
-     <button onClick={()=>loadMore()}>Click heree</button>
+     <button>Click heree</button>
      </MoviesContainer>
     </>
   }
@@ -106,4 +81,4 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
   );
 }
 
-export default MoviesShow;
+export default LoadMore;

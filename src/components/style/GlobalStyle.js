@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     width:100%;
     background:${({theme,urlImage})=> urlImage ? "center center / cover no-repeat": theme.colors.main};
     background-image: url(${({urlImage})=>urlImage});
+    background-color:${({theme})=>theme.colors.main}; 
     color: hsl(192, 100%, 9%);
     font-family: 'Poppins', sans-serif;
     font-size: 1.15em;

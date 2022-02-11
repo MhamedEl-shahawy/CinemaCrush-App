@@ -54,12 +54,17 @@ export const FilmCastContainer = styled.div`
    width:100%;
 `;
 export const Lists = styled.div`
+
   span{
   	 color:#777;
   	 font-size:20px;
   	     font-family: light;
   	     font-weight:500;
   } 
+  .white{
+    color:#fff;
+    cursor: pointer
+}
 `;
 export const List = styled.div`
     margin-top:30px; 
@@ -84,7 +89,7 @@ export const MovieDescriptionTitle =styled.h4`
    margin-top:0.5em;
 `; 
 export const MovieDescription = styled.p`
-   color:#f1f1f1;
+   color:#ffff;
    line-height:1.5;
    margin-top:0.5em;
 
@@ -95,42 +100,63 @@ export const MovieDescriptionWrapper = styled.div`
 export const Poster = styled.div`
    width:100%;
    height:100%;
-   position:absolute;
+   position:fixed;
    top:0%;
    left:0%;
-    display:flex;
+    display:${({show})=> show? "flex":"none"};
     align-items:flex-start;
-    justify-content:cenetr;
+    padding:1em;
+    justify-content:center;
+   cursor: pointer;
+
    padding:2em;
-   background-color:rgba(0,0,0,0.7);
+   background-color:rgba(0,0,0,0.8);
    z-index:999;
-   display:none;
+`;
+export const Iframe = styled.iframe`
+  width:100%;
+  height:100%;
 `;
 export const VideoTrailer = styled.div`
    width:100%;
    height:100%;
-   position:absolute;
+   position:fixed;
+   display:${({show})=> show ? "flex":"none"};
    top:0%;
    left:0%;
-    display:flex;
     align-items:flex-start;
-    justify-content:cenetr;
+    justify-content:center;
    padding:2em;
-   background-color:rgba(0,0,0,0.7);
+   background-color:rgba(0,0,0,0.8);
    z-index:999; 
-   display:none;
- 
+   cursor: pointer;
+   padding:2em;
 
 `;
 export const VideoTrailerContainer = styled.div`
+      position: relative;
       margin:0 auto;
        z-index:999; 
       border-radius:10px;
-      border:1em solid #777;
+      border:10px solid #777;
+      width:40rem;
+  height:30rem;
+  .loader-video{
+      position:absolute;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+  }
+  @media (max-width:700px){
+   width:60rem;
+   height:20rem;
+  }
 `;
 
 export const PosterImg = styled.img`
     margin:0 auto;
    z-index:999;
-
+`;
+export const Genre = styled.span`
+ margin-left:1em;
 `;
