@@ -3,10 +3,16 @@ import {useParams} from "react-router-dom";
 import MoviesShow from "./MoviesShow";
 import {useEffect } from 'react';
 import useFetchMovies from "../hooks/useFetchMovies";
+import { useSelector, useDispatch } from "react-redux";
+import Loader from "./Loader";
+
+import { getMovieInfo } from "../features/moviesInfo";
 function Artist({imageSetter}){
   const {id} = useParams();
-  const { error, isPending, dataMovie } = useFetchMovies(`https://api.themoviedb.org/3/person/${id}?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
-
+  const { error, isPending, dataMovie } = useFetchMovies(`https://api.themoviedb.org/3/person/${id}?api_key=${process.env.apikey}&language=en-US`);
+  const dispatch = useDispatch();
+  const movies = useSelector((state)=> state.moviesInfo.data);
+  const status = useSelector((state)=> state.moviesInfo.statusInfo);
   
   const runtimeConverter =  (minutes) => {
   let h = Math.floor(minutes / 60);
@@ -16,29 +22,35 @@ function Artist({imageSetter}){
   return h +"h "+ m+"m";
 };
 
-imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.profile_path)
+imageSetter("https://image.tmdb.org/t/p/original"+movies.profile_path);
+useEffect(() => {
+  dispatch(getMovieInfo(`https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`))
+}, [dispatch]);
  useEffect(()=>{
     if(id){
-    imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.profile_path);
+    imageSetter("https://image.tmdb.org/t/p/original"+movies.profile_path);
     }
   },[id])
   return(
-
+    <>
+    {status === "loading" && <Loader/>}
+  {status === "success" &&
+       
          <>           
 
             <MovieCard>
           
               <Head>
-                <Title>{dataMovie.name}</Title>  
+                <Title>{movies.name}</Title>  
               </Head>
               <Container>
-                 <Img src={"https://image.tmdb.org/t/p/original"+dataMovie.profile_path} />
+                 <Img src={"https://image.tmdb.org/t/p/original"+movies.profile_path} />
                  <Description>
                    <FilmCastContainer>
                      <FilmCast>
                        <Lists>
-                         <List><span>Birthdate</span> : {dataMovie.birthday}</List>
-                         <List><span>Art Type</span> :  {dataMovie.known_for_department}</List>
+                         <List><span>Birthdate</span> : {movies.birthday}</List>
+                         <List><span>Art Type</span> :  {movies.known_for_department}</List>
                        </Lists>
                           <Lists>
                        </Lists>
@@ -47,14 +59,16 @@ imageSetter("https://image.tmdb.org/t/p/original"+dataMovie.profile_path)
                        <MovieDescriptionWrapper>
                  <MovieDescriptionTitle>Bio</MovieDescriptionTitle>
                
-                 <MovieDescription>{dataMovie.biography}</MovieDescription>
+                 <MovieDescription>{movies.biography}</MovieDescription>
                 
               </MovieDescriptionWrapper> 
                  </Description>
               </Container>
             </MovieCard> 
-            <MoviesShow   titlePage={"All Movies To "+dataMovie.name} movieType={"https://api.themoviedb.org/3/person/"+id+"/combined_credits?api_key=986eb324dbd60d6f95d44380dfbe9ae7"} />
+            {/* <MoviesShow   titlePage={"All Movies To "+movies.name} movieType={"https://api.themoviedb.org/3/person/"+id+`/combined_credits?api_key=${process.env.REACT_APP_APIKEY}`} /> */}
        
+         </>
+  	    }
          </>
   	)
 }

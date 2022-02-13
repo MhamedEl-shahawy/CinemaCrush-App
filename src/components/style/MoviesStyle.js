@@ -83,4 +83,18 @@ export const Img = styled.img`
   max-height: 100%;
    
 `;
+export const Button = styled.button`
+ border:1px solid #fff;
+ background-color:transparent;
+ padding:0.5em 1em;
+ color:#fff;
+ cursor: pointer;
+`;
+export const BtnContainer = styled.div`
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+margin:1em 0;
+`;
 // MoviesContainer,Title,Movies,Movie,Img

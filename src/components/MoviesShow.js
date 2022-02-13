@@ -1,25 +1,34 @@
 import { useState, useEffect,useRef } from 'react';
 import {Link, useParams,useLocation } from "react-router-dom"; 
 import Loader from "./Loader";
-import {MoviesContainer,Title,Movies,MovieContainer,Movie,MovieTitle,Img} from "./style/MoviesStyle";
-import useFetchMovies from "../hooks/useFetchMovies";
+import {MoviesContainer,Title,Movies,MovieContainer,BtnContainer,Button,Movie,MovieTitle,Img} from "./style/MoviesStyle";
 import Spinner from "./Spinner";
+import { useSelector, useDispatch } from "react-redux";
+import { getMovies } from "../features/movies";
 
 function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
+  const dispatch = useDispatch();
+  const movies = useSelector((state)=> state.movies.data);
+  const status = useSelector((state)=> state.movies.status);
+
     const { id } = useParams();
     const location = useLocation();
     const [movieUrl,setMovieUrl]=useState(movieType)
-    const { error, isPending, data } = useFetchMovies(movieUrl);
     const [loadingFrame,setLoadingFrame] = useState(true);
     const [moreMovies,setMoreMovies] = useState([]);
     let [counter,setCounter] = useState(2);
      const imgRef = useRef(null);
+     const re = useRef(0);
+
     const onLoadFrame = ()=>{
       setLoadingFrame(false);
     }
+    useEffect(() => {
+      dispatch(getMovies(movieType))
+    }, [dispatch]);
     const loadMore = ()=>{
      
-      fetch(loadMoreUrl+`${counter}`+`${sort? sort:""}`+"&api_key=986eb324dbd60d6f95d44380dfbe9ae7")
+      fetch(loadMoreUrl+`${counter}`+`${sort? sort:""}`+"&api_key="+process.env.REACT_APP_APIKEY)
       .then(res => {
         if (!res.ok) { // error coming back from server
           throw Error('could not fetch the data for that resource');
@@ -27,7 +36,7 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
         return res.json();
       })
       .then(db => {
-        const newLists = [...data,...moreMovies,...db.results];
+        const newLists = [...movies.results,...moreMovies,...db.results];
         let newCounter = counter+1;
         
         setCounter(newCounter);
@@ -46,10 +55,14 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
     };
   useEffect(()=>{
     if(id){
-     setMovieUrl(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=986eb324dbd60d6f95d44380dfbe9ae7`);   
+     setMovieUrl(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.REACT_APP_APIKEY}`);  
+     dispatch(getMovies(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.REACT_APP_APIKEY}`));
+
     }else{
        imageSetter("");
        setMovieUrl(movieType);
+      dispatch(getMovies(movieType));
+
     }
   },[id,movieType])
    useEffect(()=>{
@@ -66,10 +79,11 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
 //   }
 // },[])
 //   });
+
   return (
     <>
-    {isPending && <Loader/>}
-    {!isPending &&
+    {status === "loading" && <Loader/>}
+    {status === "success" &&
     <>
      <MoviesContainer>
          <div>
@@ -78,9 +92,9 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
    
          <Movies>
 
-         {(moreMovies.length > 0 ? moreMovies:data).map( (movie,i) =>(
+         {(movies || moreMovies.length > 0)  && (moreMovies.length > 0 ? moreMovies:movies.results).map( (movie,i) =>(
         
-          <MovieContainer key={movie.id+i}>
+          <MovieContainer key={movie.title+i}>
             <Link to={`/movie/${movie.id}`}>
              <Movie>
                <MovieTitle>{movie.title  ? movie.title:movie.original_name}</MovieTitle>  
@@ -97,8 +111,9 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
     
          
 
-
-     <button onClick={()=>loadMore()}>Click heree</button>
+      <BtnContainer>
+     <Button onClick={()=>loadMore()}>Loading More</Button>
+     </BtnContainer>
      </MoviesContainer>
     </>
   }

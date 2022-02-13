@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components"
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
   * {
     box-sizing: border-box;
   }
@@ -10,8 +10,8 @@ const GlobalStyle = createGlobalStyle`
     background-image: url(${({urlImage})=>urlImage});
     background-color:${({theme})=>theme.colors.main}; 
     color: hsl(192, 100%, 9%);
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.15em;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.1rem;
     margin: 0;
     overflow-x:hidden;
     position:relative;

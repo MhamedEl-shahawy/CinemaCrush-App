@@ -6,13 +6,16 @@ import Loader from "./Loader";
 import useFetchMovies from "../hooks/useFetchMovies";
 import useFetchCast from "../hooks/useFetchCast";
 import useFetchVideos from "../hooks/useFetchVideos";
+import { useSelector, useDispatch } from "react-redux";
+import { getMovieInfo } from "../features/moviesInfo";
 import Spinner from "./Spinner";
 function MoviePlayer({imageSetter}){
   const {id} = useParams();
-
-  const { error, isPending, dataMovie } = useFetchMovies(`https://api.themoviedb.org/3/movie/${id}?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
-  const {  dataMovieCast } = useFetchCast(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
-  const {  dataMovieTrailer } = useFetchVideos(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=986eb324dbd60d6f95d44380dfbe9ae7&language=en-US`);
+  const dispatch = useDispatch();
+  const movies = useSelector((state)=> state.moviesInfo.data);
+  const status = useSelector((state)=> state.moviesInfo.statusInfo);
+  const {  dataMovieCast } = useFetchCast(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`);
+  const {  dataMovieTrailer } = useFetchVideos(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`);
   const [show,setShow] = useState(false);
   const [poster,setPoster] = useState(false);
   const [loadingFrame,setLoadingFrame] = useState(true)
@@ -24,6 +27,7 @@ function MoviePlayer({imageSetter}){
   m = m < 10 ?  m  :  m; 
   return h +"h "+ m+"m";
 };
+
 const close = (e)=>{
   const src = iframeRef.current.src;
    setShow(false);
@@ -35,28 +39,33 @@ const onLoadFrame = ()=>{
   setLoadingFrame(false);
 }
 useEffect(()=>{
-  imageSetter("https://image.tmdb.org/t/p/w500"+(dataMovie.poster_path? dataMovie.poster_path:dataMovie.backdrop_path))
+  imageSetter("https://image.tmdb.org/t/p/w500"+(movies.poster_path? movies.poster_path:movies.backdrop_path))
 
 });
  useEffect(()=>{
   if(id){
-    imageSetter("https://image.tmdb.org/t/p/original"+(dataMovie.poster_path? dataMovie.poster_path:dataMovie.backdrop_path));
+    dispatch(getMovieInfo(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`))
+
+    imageSetter("https://image.tmdb.org/t/p/original"+(movies.poster_path? movies.poster_path:movies.backdrop_path));
     }
-  },[id])
+  },[id]);
+  useEffect(() => {
+    dispatch(getMovieInfo(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`))
+  }, [dispatch]);
   return(
     <>
-     {isPending && <Loader/>}
-     {!isPending &&
+      {status === "loading" && <Loader/>}
+    {status === "success" &&
          <>           
            <Poster show={poster} onClick={()=> close()}>
-            <PosterImg  src={"https://image.tmdb.org/t/p/w400"+(dataMovie.poster_path? dataMovie.poster_path:dataMovie.backdrop_path)}/>
+            <PosterImg  src={"https://image.tmdb.org/t/p/w400"+(movies.poster_path? movies.poster_path:movies.backdrop_path)}/>
            </Poster>
            <VideoTrailer show={show} onClick={(e)=> close(e)}>
            
            {dataMovieTrailer.length !== 0 ? 
             <VideoTrailerContainer>
             {loadingFrame && <Spinner/>}
-            <Iframe ref={iframeRef} onLoad={()=>onLoadFrame()} src={"https://www.youtube.com/embed/"+dataMovieTrailer[0].key} title={dataMovie.title} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></Iframe>
+            <Iframe ref={iframeRef} onLoad={()=>onLoadFrame()} src={"https://www.youtube.com/embed/"+dataMovieTrailer[0].key} title={movies.title} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></Iframe>
             </VideoTrailerContainer>
             :
             <VideoTrailerContainer>
@@ -66,22 +75,22 @@ useEffect(()=>{
           }
        
            </VideoTrailer>
-            <MovieCard key={dataMovie.id}>
+            <MovieCard key={movies.id}>
           
               <Head>
-                <Title>{dataMovie.title}</Title>  
+                <Title>{movies.title}</Title>  
               </Head>
               <Container>
-                 <Img  src={"https://image.tmdb.org/t/p/w500"+(dataMovie.poster_path? dataMovie.poster_path:dataMovie.backdrop_path)} />
+                 <Img  src={"https://image.tmdb.org/t/p/w500"+(movies.poster_path? movies.poster_path:movies.backdrop_path)} />
                  <Description>
                    <FilmCastContainer>
                      <FilmCast>
                        <Lists>
-                         <List><span>IMDB Rating</span> : {dataMovie.vote_average}</List>
-                         <List><span>Release</span> :  {dataMovie.release_date}</List>
+                         <List><span>IMDB Rating</span> : {movies.vote_average}</List>
+                         <List><span>Release</span> :  {movies.release_date}</List>
                          <List>
                          <span>Genres</span> : 
-                          {((dataMovie.genres || []).length !== 0) ?  dataMovie.genres.map((db,i)=>(
+                          {((movies.genres || []).length !== 0) ?  movies.genres.map((db,i)=>(
                             <Genre>
                             <Link to={"/genres/"+db.name+"/"+db.id} key={db.id}>
                              {db.name}  
@@ -95,7 +104,7 @@ useEffect(()=>{
 
                        </Lists>
                           <Lists>
-                         <List><span>Runtime</span> :  {runtimeConverter(dataMovie.runtime)}</List>
+                         <List><span>Runtime</span> :  {runtimeConverter(movies.runtime)}</List>
                          <List><span onClick={()=> setShow(true)} className='white'>Play Trailer</span> - <span className='white' onClick={()=> setPoster(true)}>Poster</span> </List>
                        </Lists> 
                      </FilmCast>
@@ -103,21 +112,21 @@ useEffect(()=>{
                        <MovieDescriptionWrapper>
                  <MovieDescriptionTitle>Cast</MovieDescriptionTitle>
                  <CastNamesWrapper>
-                 {dataMovieCast.map( cast => (
-                   <CastNames><Link to={"/artist/"+cast.id}>{cast.name}, </Link></CastNames>
+                 {dataMovieCast.map( (cast,i) => (
+                   <CastNames key={cast.id+i}><Link to={"/artist/"+cast.id}  key={cast.id}>{cast.name}, </Link></CastNames>
 
                  ))}
                  </CastNamesWrapper> 
-                 <MovieDescriptionTitle>{dataMovie.title}</MovieDescriptionTitle>
+                 <MovieDescriptionTitle>{movies.title}</MovieDescriptionTitle>
                  <MovieDescription>
-                  {dataMovie.overview}
+                  {movies.overview}
                  </MovieDescription>
               </MovieDescriptionWrapper> 
                  </Description>
               </Container>
             
             </MovieCard> 
-            <MoviesShow   titlePage={dataMovie.title}  />
+            <MoviesShow  loadMoreUrl={`https://api.themoviedb.org/3/movie/${id}/recommendations?page=`}  titlePage={movies.title}  />
        
          </>
         }
