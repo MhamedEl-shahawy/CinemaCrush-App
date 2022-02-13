@@ -28,7 +28,7 @@ import {Container,Wrapper,Signup,Anotherauth,Forget,BtnWrapper,Button,Form,Input
         <Container>
             <Form>
             <LogoWrapper>
-                <Logo>ss</Logo>
+                <Logo></Logo>
             </LogoWrapper>
             <Wrapper>
                 <Label htmlFor="email">email address</Label>
