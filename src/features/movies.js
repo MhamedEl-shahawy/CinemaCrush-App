@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-const controller = new AbortController();
-const signal = controller.signal;
+
 export const getMovies = createAsyncThunk(
     "movies/getMovies",
     async (dispatch, getState) => {
-      return await fetch(dispatch,{signal: signal}).then(
+      return await fetch(dispatch).then(
         (res) => res.json()
       );
     }
@@ -23,10 +22,22 @@ const moviesSlice = createSlice({
         },
         [getMovies.fulfilled]: (state, action) => {
           state.status = "success";
-          state.data = action.payload;
+          if(action.payload["cast"]){
+          state.data = action.payload.cast;
+          }else if(action.payload["results"]){
+            state.data = action.payload.results;
+          }else{
+            state.data = [];
+             
+          }
+           
+
         },
         [getMovies.rejected]: (state, action) => {
           state.status = "failed";
+          console.log( state.status )
+
+
         },
       },
 });

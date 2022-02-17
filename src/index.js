@@ -6,11 +6,14 @@ import {configureStore} from "@reduxjs/toolkit";
 import { Provider } from 'react-redux';
 import moviesReducer from "./features/movies";
 import moviesInfoReducer from "./features/moviesInfo";
+import authReducer from "./features/auth";
+
 
 const store = configureStore({
   reducer:{
     movies:moviesReducer,
-    moviesInfo:moviesInfoReducer
+    moviesInfo:moviesInfoReducer,
+    auth:authReducer
   }
 });
 ReactDOM.render(

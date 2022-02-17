@@ -10,6 +10,7 @@ export const MovieCard = styled.section`
    margin-bottom:2em;
 `;
 export const Head = styled.div`
+position:relative;
  background-color: rgba(17,17,17,0.8);
     background-image: url(${gradient});
     background-position: top;
@@ -20,6 +21,12 @@ export const Head = styled.div`
     position: relative;
     z-index: 1;
     box-shadow: 0 0 50px #000;
+    display: flex;
+    justify-content: space-between;
+    .bookPlayer{
+       right:0;
+       colro:#fff;
+    }
 `;
 export const Title = styled.h2`
  color:#fff;

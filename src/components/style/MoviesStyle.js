@@ -97,4 +97,28 @@ justify-content: center;
 align-items: center;
 margin:1em 0;
 `;
+export const SaveContainer = styled.div`
+  width:100%;
+  display: flex;
+  justify-content: flex-end;
+  position:relative;
+`;
+export const BookMarkWrapper = styled.div`
+ position: absolute; 
+    height: 70px; 
+    width: 50px; 
+    padding: 0px; 
+    -webkit-transform: rotate(0deg) skew(0deg); 
+    transform: rotate(0deg) skew(0deg); 
+    border-left: 25px solid rgba(112, 112, 111,0.5); 
+    border-right: 25px solid   rgba(112, 112, 111,0.5); 
+    border-bottom: 25px solid transparent; 
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    color:#fff;
+    right:0;
+`;
 // MoviesContainer,Title,Movies,Movie,Img

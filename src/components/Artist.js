@@ -2,14 +2,12 @@ import {MovieCard,Title,Head,Container,Img,Description,FilmCast,Lists,List,Movie
 import {useParams} from "react-router-dom";
 import MoviesShow from "./MoviesShow";
 import {useEffect } from 'react';
-import useFetchMovies from "../hooks/useFetchMovies";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "./Loader";
 
 import { getMovieInfo } from "../features/moviesInfo";
 function Artist({imageSetter}){
   const {id} = useParams();
-  const { error, isPending, dataMovie } = useFetchMovies(`https://api.themoviedb.org/3/person/${id}?api_key=${process.env.apikey}&language=en-US`);
   const dispatch = useDispatch();
   const movies = useSelector((state)=> state.moviesInfo.data);
   const status = useSelector((state)=> state.moviesInfo.statusInfo);
@@ -25,10 +23,12 @@ function Artist({imageSetter}){
 imageSetter("https://image.tmdb.org/t/p/original"+movies.profile_path);
 useEffect(() => {
   dispatch(getMovieInfo(`https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`))
-}, [dispatch]);
+}, []);
  useEffect(()=>{
     if(id){
     imageSetter("https://image.tmdb.org/t/p/original"+movies.profile_path);
+    dispatch(getMovieInfo(`https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`))
+
     }
   },[id])
   return(
@@ -65,7 +65,7 @@ useEffect(() => {
                  </Description>
               </Container>
             </MovieCard> 
-            {/* <MoviesShow   titlePage={"All Movies To "+movies.name} movieType={"https://api.themoviedb.org/3/person/"+id+`/combined_credits?api_key=${process.env.REACT_APP_APIKEY}`} /> */}
+            <MoviesShow   titlePage={"All Movies To "+movies.name} movieType={`https://api.themoviedb.org/3/person/${id}/combined_credits?api_key=${process.env.REACT_APP_APIKEY}`} />
        
          </>
   	    }

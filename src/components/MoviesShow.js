@@ -1,10 +1,11 @@
 import { useState, useEffect,useRef } from 'react';
 import {Link, useParams,useLocation } from "react-router-dom"; 
 import Loader from "./Loader";
-import {MoviesContainer,Title,Movies,MovieContainer,BtnContainer,Button,Movie,MovieTitle,Img} from "./style/MoviesStyle";
+import {MoviesContainer,Title,Movies,MovieContainer,BtnContainer,Button,Movie,MovieTitle,SaveContainer,BookMarkWrapper,Img} from "./style/MoviesStyle";
 import Spinner from "./Spinner";
 import { useSelector, useDispatch } from "react-redux";
 import { getMovies } from "../features/movies";
+import { FaPlus } from "react-icons/fa";
 
 function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
   const dispatch = useDispatch();
@@ -18,14 +19,13 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
     const [moreMovies,setMoreMovies] = useState([]);
     let [counter,setCounter] = useState(2);
      const imgRef = useRef(null);
-     const re = useRef(0);
 
     const onLoadFrame = ()=>{
       setLoadingFrame(false);
     }
     useEffect(() => {
-      dispatch(getMovies(movieType))
-    }, [dispatch]);
+       dispatch(getMovies(movieType))
+    }, []);
     const loadMore = ()=>{
      
       fetch(loadMoreUrl+`${counter}`+`${sort? sort:""}`+"&api_key="+process.env.REACT_APP_APIKEY)
@@ -36,7 +36,7 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
         return res.json();
       })
       .then(db => {
-        const newLists = [...movies.results,...moreMovies,...db.results];
+        const newLists = [...movies,...moreMovies,...db.results];
         let newCounter = counter+1;
         
         setCounter(newCounter);
@@ -55,8 +55,8 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
     };
   useEffect(()=>{
     if(id){
-     setMovieUrl(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.REACT_APP_APIKEY}`);  
-     dispatch(getMovies(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.REACT_APP_APIKEY}`));
+     setMovieUrl(movieType);  
+     dispatch(getMovies(movieType));
 
     }else{
        imageSetter("");
@@ -64,7 +64,7 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
       dispatch(getMovies(movieType));
 
     }
-  },[id,movieType])
+  },[id,movieType]);
    useEffect(()=>{
       setMoreMovies([])
    },[location]);
@@ -79,7 +79,6 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
 //   }
 // },[])
 //   });
-
   return (
     <>
     {status === "loading" && <Loader/>}
@@ -92,16 +91,21 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
    
          <Movies>
 
-         {(movies || moreMovies.length > 0)  && (moreMovies.length > 0 ? moreMovies:movies.results).map( (movie,i) =>(
+         {(movies || moreMovies.length > 0)  && (moreMovies.length > 0 ? moreMovies:movies).map( (movie,i) =>(
         
-          <MovieContainer key={movie.title+i}>
+          <MovieContainer key={movie.id+i}>
+            <SaveContainer>
+              <BookMarkWrapper>
+                <FaPlus/>
+              </BookMarkWrapper>
+            </SaveContainer>
             <Link to={`/movie/${movie.id}`}>
              <Movie>
                <MovieTitle>{movie.title  ? movie.title:movie.original_name}</MovieTitle>  
             </Movie>  
             {loadingFrame && <Spinner/>}
             {movie.poster_path?  <Img ref={imgRef}  onLoad={()=>onLoadFrame()} src={"https://image.tmdb.org/t/p/w500"+movie.poster_path}/>:movie.backdrop_path?
-                                  <Img ref={imgRef} onLoad={()=>onLoadFrame()} src={"https://image.tmdb.org/t/p/w500"+movie.backdrop_path}/>:  <Img ref={imgRef} onLoad={()=>onLoadFrame()} src="https://picsum.photos/500/745.jpg"/>
+                                <Img ref={imgRef} onLoad={()=>onLoadFrame()} src={"https://image.tmdb.org/t/p/w500"+movie.backdrop_path}/>:  <Img ref={imgRef} onLoad={()=>onLoadFrame()} src="https://picsum.photos/500/745.jpg"/>
             }
               </Link>
          </MovieContainer> 
@@ -111,8 +115,8 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
     
          
 
-      <BtnContainer>
-     <Button onClick={()=>loadMore()}>Loading More</Button>
+      <BtnContainer onClick={()=>loadMore()}>
+     <Button>Loading More</Button>
      </BtnContainer>
      </MoviesContainer>
     </>

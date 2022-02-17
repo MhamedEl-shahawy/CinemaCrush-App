@@ -1,13 +1,16 @@
 import { useState, useEffect,useRef } from 'react';
 import {MovieCard,Iframe,Title,Head,Genre,Container,Img,Description,FilmCast,Lists,List,MovieDescriptionTitle,Poster,VideoTrailer,VideoTrailerContainer,PosterImg,MovieDescription,CastNames,MovieDescriptionWrapper,FilmCastContainer,CastNamesWrapper} from "./style/MoviePlayerStyle";
+import {BookMarkWrapper} from "./style/MoviesStyle";
+
 import {Link,useParams} from "react-router-dom";
 import MoviesShow from "./MoviesShow";
 import Loader from "./Loader";
-import useFetchMovies from "../hooks/useFetchMovies";
 import useFetchCast from "../hooks/useFetchCast";
 import useFetchVideos from "../hooks/useFetchVideos";
 import { useSelector, useDispatch } from "react-redux";
 import { getMovieInfo } from "../features/moviesInfo";
+import { FaPlus } from "react-icons/fa";
+
 import Spinner from "./Spinner";
 function MoviePlayer({imageSetter}){
   const {id} = useParams();
@@ -51,7 +54,7 @@ useEffect(()=>{
   },[id]);
   useEffect(() => {
     dispatch(getMovieInfo(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`))
-  }, [dispatch]);
+  }, []);
   return(
     <>
       {status === "loading" && <Loader/>}
@@ -78,7 +81,10 @@ useEffect(()=>{
             <MovieCard key={movies.id}>
           
               <Head>
-                <Title>{movies.title}</Title>  
+                <Title>{movies.title}</Title> 
+                <BookMarkWrapper className="bookPlayer">
+                <FaPlus/>
+              </BookMarkWrapper> 
               </Head>
               <Container>
                  <Img  src={"https://image.tmdb.org/t/p/w500"+(movies.poster_path? movies.poster_path:movies.backdrop_path)} />
@@ -91,7 +97,7 @@ useEffect(()=>{
                          <List>
                          <span>Genres</span> : 
                           {((movies.genres || []).length !== 0) ?  movies.genres.map((db,i)=>(
-                            <Genre>
+                            <Genre key={db.name}>
                             <Link to={"/genres/"+db.name+"/"+db.id} key={db.id}>
                              {db.name}  
                             </Link>
@@ -113,7 +119,7 @@ useEffect(()=>{
                  <MovieDescriptionTitle>Cast</MovieDescriptionTitle>
                  <CastNamesWrapper>
                  {dataMovieCast.map( (cast,i) => (
-                   <CastNames key={cast.id+i}><Link to={"/artist/"+cast.id}  key={cast.id}>{cast.name}, </Link></CastNames>
+                   <CastNames key={cast.id}><Link to={"/artist/"+cast.id}  key={cast.name}>{cast.name}, </Link></CastNames>
 
                  ))}
                  </CastNamesWrapper> 
@@ -126,7 +132,7 @@ useEffect(()=>{
               </Container>
             
             </MovieCard> 
-            <MoviesShow  loadMoreUrl={`https://api.themoviedb.org/3/movie/${id}/recommendations?page=`}  titlePage={movies.title}  />
+            <MoviesShow  movieType={`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.REACT_APP_APIKEY}`} loadMoreUrl={`https://api.themoviedb.org/3/movie/${id}/recommendations?page=`}  titlePage={movies.title}  />
        
          </>
         }

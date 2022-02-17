@@ -2,11 +2,14 @@ import {useState} from "react";
 import {Container,Wrapper,Signup,Anotherauth,Forget,BtnWrapper,Button,Form,Input,Label, LogoWrapper, Logo} from "./style/Login";
  import {Link,useNavigate} from "react-router-dom";
  import logo from "./images/logo.png";
-
+import {useDispatch} from "react-redux";
+import {getLoginToken} from "../features/auth"
  const Login = ({authrized})=>{
     const [params,setParams] = useState({token:"333",status:true});
     const [email,setEmail] = useState("");
+     const [password,setPassword] = useState("");
    const navigate = useNavigate();
+   const dispatch = useDispatch();
      const loginAuth = (e)=>{
         e.preventDefault();
        if(email.toString().trim() !== ""){
@@ -14,7 +17,7 @@ import {Container,Wrapper,Signup,Anotherauth,Forget,BtnWrapper,Button,Form,Input
             token:"3333",
             status:true
         }));   
-        
+        dispatch(getLoginToken({email:email,password:password}))
         authrized(params);
 
         navigate("/");
@@ -36,7 +39,7 @@ import {Container,Wrapper,Signup,Anotherauth,Forget,BtnWrapper,Button,Form,Input
             </Wrapper>
             <Wrapper>
                 <Label htmlFor="password">password</Label>
-                <Input type="password" id="password" name="password" />
+                <Input type="password" id="password" name="password" onChange={(e)=>setPassword(e.target.value)} />
             </Wrapper>
             <Wrapper>
               <Forget><Link to="/forgetpassword">Forget Password?</Link></Forget>
