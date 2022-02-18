@@ -17,10 +17,12 @@ import {getLoginToken} from "../features/auth"
             token:"3333",
             status:true
         }));   
-        dispatch(getLoginToken({email:email,password:password}))
+        dispatch(getLoginToken({email:email,password:password})).then((db)=>{
+            console.log(db)
+        })
         authrized(params);
 
-        navigate("/");
+        // navigate("/");
     }else{
         authrized("");
 

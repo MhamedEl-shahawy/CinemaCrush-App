@@ -1,4 +1,4 @@
-import {Nav,Header,Img,List,ListElement,HeadIntro,Title,IntroDesc} from "./style/Nav.js"
+import {Nav,Header,Img,List,ListElement,HeadIntro,Title,IntroDesc,LogoContainer} from "./style/Nav.js"
 import {Link,useParams} from "react-router-dom"; 
 
 function Navbar({logo}) {
@@ -9,12 +9,20 @@ function Navbar({logo}) {
     <>
         <Header>
           <Nav>
+          <LogoContainer>
             <Img src={logo} />  
+            </LogoContainer>
             <List>
               <ListElement><Link to="/">Box Movies</Link></ListElement>
               <ListElement><Link to="/popular">Popular</Link></ListElement>
               <ListElement><Link to="/top">Top Rated</Link></ListElement>
               <ListElement><Link to="upcoming">UpComing</Link></ListElement>
+            </List>
+            <List style={{border:"none"}}>
+              <ListElement><Link to="/">Bookmarks</Link></ListElement>
+              <ListElement><Link to="/popular">History</Link></ListElement>
+              <ListElement><Link to="/top">My collection</Link></ListElement>
+              
             </List>
           </Nav>
           <>

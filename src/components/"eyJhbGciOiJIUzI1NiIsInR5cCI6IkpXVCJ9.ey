@@ -1,0 +1,5 @@
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGViY2ZkNDI0NTk1MjcwY2Y4MDAxOCIsImlhdCI6MTY0NTEzMzA1MywiZXhwIjoxNjQ3NzI1MDUzfQ.MpnceRzyP9qczQDiTECUUZyakG0n3xN9vDjSma85FHo"
+
+
+(get) /api/videos 
+(post) /api/videos/:idx

@@ -3,6 +3,8 @@ const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
   * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
   body {
     width:100%;
@@ -12,12 +14,9 @@ const GlobalStyle = createGlobalStyle`
     color: hsl(192, 100%, 9%);
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 1.1rem;
-    margin: 0;
     overflow-x:hidden;
     position:relative;
   }
-  
-
 a{
    text-decoration:none;
    color:${({theme})=> theme.colors.primary};

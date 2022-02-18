@@ -8,9 +8,17 @@ export const getMovies = createAsyncThunk(
       );
     }
   );
+  export const getMovieReviews = createAsyncThunk(
+    "movies/getMovieReviews",
+    async (dispatch, getState) => {
+      return await fetch(dispatch).then(
+        (res) => res.json()
+      );
+    }
+  );
 const moviesSlice = createSlice({
     name:"movies",
-    initialState:{data:[],status: null},
+    initialState:{data:[],reviews:[],reviewsStatus:null,status: null},
     reducers:{
         login:(state,action)=>{
             state.value = action.payload;
@@ -35,9 +43,19 @@ const moviesSlice = createSlice({
         },
         [getMovies.rejected]: (state, action) => {
           state.status = "failed";
-          console.log( state.status )
-
-
+        },
+        [getMovieReviews.pending]: (state, action) => {
+          state.reviewsStatus = "loading";
+        },
+        [getMovieReviews.fulfilled]: (state, action) => {
+          state.reviewsStatus = "success";
+          if(action.payload.results){
+          state.reviews = action.payload.results;
+          } 
+ 
+        },
+        [getMovieReviews.rejected]: (state, action) => {
+          state.reviewsStatus = "failed";
         },
       },
 });

@@ -1,7 +1,8 @@
 import { useState, useEffect,useRef } from 'react';
-import {MovieCard,Iframe,Title,Head,Genre,Container,Img,Description,FilmCast,Lists,List,MovieDescriptionTitle,Poster,VideoTrailer,VideoTrailerContainer,PosterImg,MovieDescription,CastNames,MovieDescriptionWrapper,FilmCastContainer,CastNamesWrapper} from "./style/MoviePlayerStyle";
+import {MovieCard,Iframe,Title,Head,Genre,Container,MovieCardWrapper,Img,Description,FilmCast,Lists,List,MovieDescriptionTitle,Poster,VideoTrailer,VideoTrailerContainer,PosterImg,MovieDescription,CastNames,MovieDescriptionWrapper,FilmCastContainer,CastNamesWrapper} from "./style/MoviePlayerStyle";
 import {BookMarkWrapper} from "./style/MoviesStyle";
 
+import Reviews from "./Reviews";
 import {Link,useParams} from "react-router-dom";
 import MoviesShow from "./MoviesShow";
 import Loader from "./Loader";
@@ -79,7 +80,7 @@ useEffect(()=>{
        
            </VideoTrailer>
             <MovieCard key={movies.id}>
-          
+           <MovieCardWrapper>
               <Head>
                 <Title>{movies.title}</Title> 
                 <BookMarkWrapper className="bookPlayer">
@@ -118,7 +119,7 @@ useEffect(()=>{
                        <MovieDescriptionWrapper>
                  <MovieDescriptionTitle>Cast</MovieDescriptionTitle>
                  <CastNamesWrapper>
-                 {dataMovieCast.map( (cast,i) => (
+                 {dataMovieCast.slice(0,10).map( (cast,i) => (
                    <CastNames key={cast.id}><Link to={"/artist/"+cast.id}  key={cast.name}>{cast.name}, </Link></CastNames>
 
                  ))}
@@ -130,9 +131,10 @@ useEffect(()=>{
               </MovieDescriptionWrapper> 
                  </Description>
               </Container>
-            
+              </MovieCardWrapper>  
             </MovieCard> 
-            <MoviesShow  movieType={`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.REACT_APP_APIKEY}`} loadMoreUrl={`https://api.themoviedb.org/3/movie/${id}/recommendations?page=`}  titlePage={movies.title}  />
+            <Reviews movieName={movies.title}/>
+            <MoviesShow  movieType={`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.REACT_APP_APIKEY}`} loadMoreUrl={`https://api.themoviedb.org/3/movie/${id}/recommendations?page=`}  titlePage={"Related Movies: "+movies.title}  />
        
          </>
         }

@@ -42,7 +42,7 @@ export const Input = styled.input`
   background-color:rgba(12, 11, 16,.04);
   font-size:1.2rem;
   padding:0.3em 0.4em;
-  color:#fff;
+  color:#000;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 `;

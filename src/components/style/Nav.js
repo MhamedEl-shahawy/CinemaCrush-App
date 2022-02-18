@@ -1,15 +1,20 @@
 import styled from "styled-components";
 export const Header = styled.header`
-   max-width:1440px;
+   width:100%;
    color:${({theme})=> theme.colors.primary};
+   height:100%;
+   position: -webkit-sticky;
+position: sticky;
+top:0;
+
 `;
 export const Nav = styled.nav`
    width:100%;
-   display:flex;
-   align-items:center;
-      background-color:${({theme})=> theme.colors.main};
-         padding:2em;
-
+   display:block;
+   height:100%;
+   background-color:${({theme})=> theme.colors.nav2};      
+   padding:1em 0;
+  
          @media (max-width:999px){
             display:block;
                  text-align: center;
@@ -20,22 +25,50 @@ export const Nav = styled.nav`
              
          }
 
-
+`;
+export const LogoContainer = styled.div`
+  width: 100%;
+  padding-left: 1.1em;
+  
+  text-align:center;
 `;
 export const Img = styled.img`
-  margin-rigth:2em;
+max-width: 100%;
+
 `;
 export const List = styled.ul`
-    display:flex;
-    align-items:center;
+   border-bottom:1px solid rgba(47, 51, 67,0.5); 
+   padding-top: 1em;
     @media (max-width:999px){
     justify-content: center;  
     }
 
 `;
 export const ListElement = styled.li`
-   margin-left:1em;
+   margin-bottom:1em;
+   padding:0.6em 0;
+   position: relative;
+  &:hover{
+   transition: all ease-in-out 0.4s;
+   background-color:${({theme})=> theme.colors.bgHover};
+   &::before{
+         content: '';
+        transition: all ease-in-out 0.4s;
+         position: absolute;
+         left: 0;
+         top:0;
+         background-color:${({theme})=> theme.colors.primary};
+         width:0.2rem;
+         height: 100%;
+      }
+  }
+a{
+   color:${({theme})=> theme.colors.navColor};
+   padding-left:2em;
+    font-size:1rem;
+   border: none !important;
 
+}
    color:${({theme})=> theme.colors.primary};
     @media (max-width:999px){
       font-size: 0.8em;

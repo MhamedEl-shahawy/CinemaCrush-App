@@ -1,6 +1,6 @@
 import {useState} from "react";
 import { BrowserRouter as Router, Navigate,Routes, Route,useParams } from 'react-router-dom';
-
+import { Container,WrapperRoutes } from "./style/RoutesStyle";
 import Navbar from "./Navbar";
 import logo from "./images/logo.png"
 
@@ -17,8 +17,9 @@ function ContentRoutes({auth}) {
   }
   
   return (
-       <>
+       <Container>
         <Navbar logo={logo}  />
+        <WrapperRoutes>
           <Routes>
           <Route path='/' element={<MoviesShow  imageSetter={(url) => setImage(url) }  loadMoreUrl="https://api.themoviedb.org/3/movie/now_playing?page="  movieType={`https://api.themoviedb.org/3/movie/now_playing?page=1&api_key=${process.env.REACT_APP_APIKEY}`} />}  exact />
           <Route path='/popular' element={<MoviesShow imageSetter={(url) => setImage(url) } loadMoreUrl="https://api.themoviedb.org/3/discover/movie?page="  sort="&sort_by=popularity.desc"  titlePage="Popular Movies" movieType={`https://api.themoviedb.org/3/discover/movie?page=1&sort_by=popularity.desc&api_key=${process.env.REACT_APP_APIKEY}`}/>} />
@@ -31,8 +32,8 @@ function ContentRoutes({auth}) {
 
           </Routes>
         <Footer logo={logo} />
-
-    </>
+      </WrapperRoutes>
+    </Container>
   );
 }
 

@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.section`
- position: fixed;
+   position: -webkit-sticky;
+position: sticky;
+top:0;
  z-index: 9999;
   width:100%;
-  height:100vh;
+  height:103vh;
   display: flex;
   justify-content: center;
   align-items: center;

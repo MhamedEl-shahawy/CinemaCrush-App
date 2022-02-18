@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 export const MoviesContainer = styled.section`
-    max-width:1440px;
+    width:100%;
     margin-top:1em;
     color:${({theme})=> theme.colors.primary};
+    padding: 1em;
  `;
 export const Title = styled.h2`
     margin-bottom:1em;
      font-weight:400;
+     color:#fff;
 `;
 
 export const Movies = styled.div`

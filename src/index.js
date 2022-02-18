@@ -7,13 +7,14 @@ import { Provider } from 'react-redux';
 import moviesReducer from "./features/movies";
 import moviesInfoReducer from "./features/moviesInfo";
 import authReducer from "./features/auth";
-
+import bookmarkReducer from "./features/bookmark";
 
 const store = configureStore({
   reducer:{
     movies:moviesReducer,
     moviesInfo:moviesInfoReducer,
-    auth:authReducer
+    auth:authReducer,
+    bookmark:bookmarkReducer
   }
 });
 ReactDOM.render(

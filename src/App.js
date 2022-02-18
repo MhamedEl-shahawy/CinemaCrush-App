@@ -18,6 +18,10 @@ function App() {
        main:"#000",
        primary:"#fff",
        secondary:"#111",
+       nav:"rgba(31, 38, 60,0.5)",
+       nav2:"rgba(37, 37, 37,0.5)",
+       bgHover:"rgba(0, 0, 0,1)",
+       navColor:"#4C5764"
      },
      mobile: '768px',
   }
@@ -43,7 +47,6 @@ function App() {
           <Routes>
           <Route  exact path="/*"  element={<ContentRoutes auth={(auth !== null) ? auth.status:authWrap} />}/>
           <Route path='/login' element={<Login  authrized={(authSt)=> authrized(authSt)}/>}  />
-
           <Route path='/signup' element={<Signup/>} />
 
           </Routes>
