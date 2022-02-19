@@ -2,7 +2,7 @@ import {Link,useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import Loader from "./Loader";
 import { useSelector, useDispatch } from "react-redux";
-import { getMovies } from "../features/movies";
+import { getMovies,changeUrl } from "../features/movies";
 import {MoviesContainer,Title,Movies,MovieContainer,Movie,BtnContainer,Button,MovieTitle,Img} from "./style/MoviesStyle";
 import {BookMarkWrapper} from "./style/MoviesStyle";
 import { FaPlus } from "react-icons/fa";
@@ -41,11 +41,10 @@ function MoviesGenres({titlePage,imageSetter}) {
          console.error(err.message)
       })
     };
-    useEffect(()=>{
-		imageSetter("")
-    },[titlePage]);
     useEffect(() => {
       dispatch(getMovies(`https://api.themoviedb.org/3/discover/movie?page=1&api_key=${process.env.REACT_APP_APIKEY}&with_genres=${id}`));
+      dispatch(changeUrl(""))
+
     }, []);
   return (
     <>

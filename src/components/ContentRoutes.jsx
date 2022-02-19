@@ -9,8 +9,11 @@ import MoviePlayer from "./MoviePlayer"
 import Artist from "./Artist";
 import MoviesGenres from "./MoviesGenres";
 import Footer from "./Footer";
+import {useSelector} from "react-redux";
 function ContentRoutes({auth}) {
   const [image,setImage] = useState("");
+  const imgUrl = useSelector((state)=> state.movies.img);
+
   const {id} = useParams();
   if(!auth){
     return  <Navigate to="/login" />  ;
@@ -19,7 +22,7 @@ function ContentRoutes({auth}) {
   return (
        <Container>
         <Navbar logo={logo}  />
-        <WrapperRoutes>
+        <WrapperRoutes  urlImage={imgUrl}>
           <Routes>
           <Route path='/' element={<MoviesShow  imageSetter={(url) => setImage(url) }  loadMoreUrl="https://api.themoviedb.org/3/movie/now_playing?page="  movieType={`https://api.themoviedb.org/3/movie/now_playing?page=1&api_key=${process.env.REACT_APP_APIKEY}`} />}  exact />
           <Route path='/popular' element={<MoviesShow imageSetter={(url) => setImage(url) } loadMoreUrl="https://api.themoviedb.org/3/discover/movie?page="  sort="&sort_by=popularity.desc"  titlePage="Popular Movies" movieType={`https://api.themoviedb.org/3/discover/movie?page=1&sort_by=popularity.desc&api_key=${process.env.REACT_APP_APIKEY}`}/>} />

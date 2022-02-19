@@ -2,10 +2,11 @@ import { BrowserRouter as Router, Routes, Route,useParams } from 'react-router-d
 import {useState,useEffect} from "react";
 import {ThemeProvider} from "styled-components";
 import GlobalStyle from "./components/style/GlobalStyle.js";
-import {WrapperContainer} from "./components/style/WrapperContainer.js";
+import {WrapperContainer,Bg} from "./components/style/WrapperContainer.js";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import ContentRoutes  from './components/ContentRoutes.jsx';
+import { useSelector } from 'react-redux';
 function App() {
   const [image,setImage] = useState("");
   const {id} = useParams();
@@ -42,7 +43,8 @@ function App() {
   return (
        <Router>
        <ThemeProvider theme={theme}>
-        <GlobalStyle urlImage={image}/>
+        <GlobalStyle/>
+        <Bg></Bg>
         <WrapperContainer>
           <Routes>
           <Route  exact path="/*"  element={<ContentRoutes auth={(auth !== null) ? auth.status:authWrap} />}/>

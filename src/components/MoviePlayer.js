@@ -1,4 +1,4 @@
-import { useState, useEffect,useRef } from 'react';
+import { useState, useCallback,useEffect,useRef } from 'react';
 import {MovieCard,Iframe,Title,Head,Genre,Container,MovieCardWrapper,Img,Description,FilmCast,Lists,List,MovieDescriptionTitle,Poster,VideoTrailer,VideoTrailerContainer,PosterImg,MovieDescription,CastNames,MovieDescriptionWrapper,FilmCastContainer,CastNamesWrapper} from "./style/MoviePlayerStyle";
 import {BookMarkWrapper} from "./style/MoviesStyle";
 
@@ -10,6 +10,7 @@ import useFetchCast from "../hooks/useFetchCast";
 import useFetchVideos from "../hooks/useFetchVideos";
 import { useSelector, useDispatch } from "react-redux";
 import { getMovieInfo } from "../features/moviesInfo";
+import {changeUrl} from "../features/movies";
 import { FaPlus } from "react-icons/fa";
 
 import Spinner from "./Spinner";
@@ -42,19 +43,36 @@ const close = (e)=>{
 const onLoadFrame = ()=>{
   setLoadingFrame(false);
 }
+const escFunction = useCallback((event) => {
+  if (event.keyCode === 27) {
+    close()
+  }else if(event.touchmove){
+    console.log("touch event")
+  }
+}, []);
+
+useEffect(() => {
+  document.addEventListener("keydown", escFunction);
+
+  return () => {
+    document.removeEventListener("keydown", escFunction);
+  };
+}, [escFunction]);
 useEffect(()=>{
-  imageSetter("https://image.tmdb.org/t/p/w500"+(movies.poster_path? movies.poster_path:movies.backdrop_path))
+  dispatch(changeUrl("https://image.tmdb.org/t/p/w780"+(movies.poster_path? movies.poster_path:movies.backdrop_path)))
 
 });
  useEffect(()=>{
+
   if(id){
     dispatch(getMovieInfo(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`))
-
-    imageSetter("https://image.tmdb.org/t/p/original"+(movies.poster_path? movies.poster_path:movies.backdrop_path));
+    dispatch(changeUrl("https://image.tmdb.org/t/p/w780"+(movies.poster_path? movies.poster_path:movies.backdrop_path)))
     }
   },[id]);
   useEffect(() => {
-    dispatch(getMovieInfo(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`))
+    dispatch(getMovieInfo(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`));
+    dispatch(changeUrl("https://image.tmdb.org/t/p/w780"+(movies.poster_path? movies.poster_path:movies.backdrop_path)))
+
   }, []);
   return(
     <>

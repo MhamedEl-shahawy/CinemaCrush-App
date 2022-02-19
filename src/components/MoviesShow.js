@@ -4,7 +4,7 @@ import Loader from "./Loader";
 import {MoviesContainer,Title,Movies,MovieContainer,BtnContainer,Button,Movie,MovieTitle,SaveContainer,BookMarkWrapper,Img} from "./style/MoviesStyle";
 import Spinner from "./Spinner";
 import { useSelector, useDispatch } from "react-redux";
-import { getMovies } from "../features/movies";
+import { getMovies,changeUrl } from "../features/movies";
 import { FaPlus } from "react-icons/fa";
 
 function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
@@ -57,11 +57,13 @@ function MoviesShow({movieType,titlePage,sort,loadMoreUrl,imageSetter}) {
     if(id){
      setMovieUrl(movieType);  
      dispatch(getMovies(movieType));
+     console.log(id);
 
     }else{
        imageSetter("");
        setMovieUrl(movieType);
       dispatch(getMovies(movieType));
+      dispatch(changeUrl(""))
 
     }
   },[id,movieType]);
