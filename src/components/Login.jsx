@@ -2,6 +2,14 @@ import {useState} from "react";
 import {Container,Wrapper,Signup,Anotherauth,Forget,BtnWrapper,Button,Form,Input,Label, LogoWrapper, Logo} from "./style/Login";
  import {Link,useNavigate} from "react-router-dom";
  import logo from "./images/logo.png";
+ import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+  } from "firebase/auth";
+  import { auth } from "./firebase-config";
+
 import {useDispatch} from "react-redux";
 import {getLoginToken} from "../features/auth"
  const Login = ({authrized})=>{
@@ -28,6 +36,20 @@ import {getLoginToken} from "../features/auth"
 
     }
      };
+     const login = async (e) => {
+         e.preventDefault();
+        try {
+          const user = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          console.log(user);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+
     return (
         <>
         <Container>
@@ -48,7 +70,7 @@ import {getLoginToken} from "../features/auth"
             </Wrapper>
             <Wrapper>
             <Button>
-                <BtnWrapper onClick={(e)=>loginAuth(e)}>
+                <BtnWrapper onClick={(e)=>login(e)}>
                 Login
                 </BtnWrapper>
             </Button>
