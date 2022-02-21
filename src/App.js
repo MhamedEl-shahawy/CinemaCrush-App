@@ -12,7 +12,7 @@ function App() {
   const {id} = useParams();
   const [auth,setAuth] = useState(JSON.parse(localStorage.getItem("cinema")) || {status:false,token:""});
   const [authWrap,setAuthWrap] = useState(false);
-  const [test,setTest] = useState(false);
+  const [token,setToken] = useState(null);
 
   const theme = {
      colors:{
@@ -26,20 +26,13 @@ function App() {
      },
      mobile: '768px',
   }
-  const authrized = (status)=>{
-    setTest(status)
-  };
-  useEffect(() => {
-    let token = "";
-    try{
-       token= JSON.parse(localStorage.getItem("cinema"));
-      setAuth(token);
-    }catch(err){
-      console.log(err);
 
-    }
+  let checkingToken = ()=>{
+    let authToken = JSON.parse(localStorage.getItem("cinemaCrush"));   
+    return authToken;
+  }
 
-  }, [test]);
+
   return (
        <Router>
        <ThemeProvider theme={theme}>
@@ -47,8 +40,8 @@ function App() {
         <Bg></Bg>
         <WrapperContainer>
           <Routes>
-          <Route  exact path="/*"  element={<ContentRoutes auth={(auth !== null) ? auth.status:authWrap} />}/>
-          <Route path='/login' element={<Login  authrized={(authSt)=> authrized(authSt)}/>}  />
+          <Route  exact path="/*"  element={<ContentRoutes auth={checkingToken()}/>}/>
+          <Route path='/login' element={<Login/>}  />
           <Route path='/signup' element={<Signup/>} />
 
           </Routes>

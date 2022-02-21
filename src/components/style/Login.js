@@ -7,6 +7,8 @@ padding-top:2em;
 display: flex;
 align-content: center;
 justify-content: center;
+margin-top:2.4em;
+position: relative;
 `;
 export const Form = styled.form`
  width: 34%; 
@@ -18,19 +20,22 @@ position:relative;
 export const LogoWrapper = styled.div`
    width:100%;
    height: 5rem;
-  
+    align-items:center;
    display:flex;
    justify-content: center;
   margin-bottom: 1em;
 `;
 export const  Logo =styled.span`
  position:absolute;
-   top:-10%;
-   width:130px;
-   height: 120px;
+   top:-13%;
+   width:8em;
+   height: 7em;
    border-radius: 50%;
-   background-color:#f00;
+   background-color:#f1f1f1;
    text-align:center; 
+   align-items:center;
+   display:flex;
+   justify-content: center;
 `;
 export const Wrapper = styled.div`
 width: 100%;
@@ -59,6 +64,9 @@ export const Button = styled.button`
   border:none;
   margin: 0.3em 0;
   font-size:1.1em;
+`;
+export const Img = styled.img`
+ max-width: 100%;
 `;
 export const BtnWrapper = styled.a`
 background-color:#5147D8; 

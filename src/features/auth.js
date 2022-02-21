@@ -1,23 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
+import { auth } from "../components/firebase-config";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 export const getLoginToken = createAsyncThunk(
     "auth/getLoginToken",
     async (dispatch, getState) => {
-        let myHeaders = new Headers();
-        myHeaders.append("Accept", "application/json");
-        let raw = JSON.stringify({
-             email:dispatch.email,
-             password:dispatch.password
-        });
-        let requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        }; 
-      return await fetch("https://cinema-club-api.herokuapp.com/api/users/login",requestOptions).then(
-        (res) => res.json()
-      );
+      return  await signInWithEmailAndPassword(auth,dispatch.email,dispatch.password);    
+        
+    }
+  );
+  export const newUser = createAsyncThunk(
+    "auth/newUser",
+    async (dispatch, getState) => {
+      return  await createUserWithEmailAndPassword(auth,dispatch.email,dispatch.password);    
+        
     }
   );
 const authSlice = createSlice({
@@ -34,8 +32,8 @@ const authSlice = createSlice({
         },
         [getLoginToken.fulfilled]: (state, action) => {
           state.statusInfo = "success";
-          state.data = action.payload;
-          console.log(state.data);
+          state.token = action.payload.user["accessToken"];
+          
 
         },
         [getLoginToken.rejected]: (state, action) => {

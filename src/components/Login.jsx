@@ -1,7 +1,9 @@
-import {useState} from "react";
-import {Container,Wrapper,Signup,Anotherauth,Forget,BtnWrapper,Button,Form,Input,Label, LogoWrapper, Logo} from "./style/Login";
+import {useState,useEffect} from "react";
+import {Container,Wrapper,Signup,Anotherauth,Forget,BtnWrapper,Img,Button,Form,Input,Label, LogoWrapper, Logo} from "./style/Login";
  import {Link,useNavigate} from "react-router-dom";
- import logo from "./images/logo.png";
+ import logo from "./images/favcon.png";
+ import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
  import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -13,49 +15,48 @@ import {Container,Wrapper,Signup,Anotherauth,Forget,BtnWrapper,Button,Form,Input
 import {useDispatch} from "react-redux";
 import {getLoginToken} from "../features/auth"
  const Login = ({authrized})=>{
-    const [params,setParams] = useState({token:"333",status:true});
     const [email,setEmail] = useState("");
      const [password,setPassword] = useState("");
+     const [token,setToken] = useState("");
    const navigate = useNavigate();
    const dispatch = useDispatch();
      const loginAuth = (e)=>{
         e.preventDefault();
-       if(email.toString().trim() !== ""){
-        localStorage.setItem("cinema",JSON.stringify({
-            token:"3333",
-            status:true
-        }));   
         dispatch(getLoginToken({email:email,password:password})).then((db)=>{
-            console.log(db)
+          if(db.payload?.user["accessToken"] != null){
+            toast.success("Login Successfuly");
+            localStorage.setItem("cinemaCrush",JSON.stringify({token:db.payload?.user["accessToken"]})); 
+              setTimeout(()=>{
+                navigate("/");
+              },3000);
+         
+         } else {
+          localStorage.removeItem("cinemaCrush");
+          toast.error("username or password not correct")
+
+         }
         })
-        authrized(params);
-
-        // navigate("/");
-    }else{
-        authrized("");
-
-    }
      };
-     const login = async (e) => {
-         e.preventDefault();
-        try {
-          const user = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          console.log(user);
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
-
+ 
     return (
         <>
+            <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      />
         <Container>
             <Form>
             <LogoWrapper>
-                <Logo></Logo>
+                <Logo>
+                  <Img src={logo}/>
+                </Logo>
             </LogoWrapper>
             <Wrapper>
                 <Label htmlFor="email">email address</Label>
@@ -70,7 +71,7 @@ import {getLoginToken} from "../features/auth"
             </Wrapper>
             <Wrapper>
             <Button>
-                <BtnWrapper onClick={(e)=>login(e)}>
+                <BtnWrapper onClick={(e)=>loginAuth(e)}>
                 Login
                 </BtnWrapper>
             </Button>

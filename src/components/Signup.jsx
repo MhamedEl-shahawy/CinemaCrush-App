@@ -1,41 +1,50 @@
 import {useState} from 'react';
-import {Container,Wrapper,Login,Anotherauth,BtnWrapper,Button,Form,Input,Label, LogoWrapper, Logo} from "./style/Login";
-import {Link} from "react-router-dom";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
-import { auth } from "./firebase-config";
+import {Container,Wrapper,Login,Anotherauth,Img,BtnWrapper,Button,Form,Input,Label, LogoWrapper, Logo} from "./style/Login";
+import {Link,useNavigate} from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import logo from "./images/favcon.png";
+import {newUser} from "../features/auth";
+import {useDispatch} from "react-redux";
 const Signup = ()=>{
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
     const [name,setName] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [confirmPassword,setConfirmPassword] = useState("");
+    const register = (e)=>{
+      e.preventDefault();
+      dispatch(newUser({email:email,password:password})).then((db)=>{
+        if(db.payload?.user["accessToken"] != null){
+          toast.success("Login Successfuly");
 
+          setTimeout(()=>{
+            navigate("/login");
+          },1000);
+       }
+      })
+   };
   
-      const register = async (e) => {
-        e.preventDefault();
-        try {
-          const user = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          console.log(user);
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
     
 
    return (
        <>
+         <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      />
        <Container>
            <Form>
            <LogoWrapper>
-               <Logo>ss</Logo>
+               <Logo><Img src={logo}/></Logo>
            </LogoWrapper>
            <Wrapper>
                <Label htmlFor="name">Name</Label>

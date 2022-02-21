@@ -1,9 +1,8 @@
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import { BrowserRouter as Router, Navigate,Routes, Route,useParams } from 'react-router-dom';
 import { Container,WrapperRoutes } from "./style/RoutesStyle";
 import Navbar from "./Navbar";
 import logo from "./images/logo.png"
-
 import MoviesShow from "./MoviesShow";
 import MoviePlayer from "./MoviePlayer"
 import Artist from "./Artist";
@@ -15,7 +14,8 @@ function ContentRoutes({auth}) {
   const imgUrl = useSelector((state)=> state.movies.img);
 
   const {id} = useParams();
-  if(!auth){
+ 
+  if(auth == null || auth.token == null){
     return  <Navigate to="/login" />  ;
   }
   
