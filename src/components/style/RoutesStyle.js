@@ -7,6 +7,9 @@ display: grid;
 grid-template-columns: repeat(1,15% 85%);
 grid-gap:1em; 
 position: relative;
+@media (max-width:1000px){
+  display:block ;
+}
 `;
 export const WrapperRoutes = styled.div`
 width: 100%;
@@ -17,5 +20,8 @@ background-size: cover;
     background-position: center center;
     background-image: url(${({urlImage})=>urlImage});
     background-color:${({theme})=>theme.colors.main}; 
-
+`;
+export const NavMob = styled.nav`
+  width: 100%;
+  background-color:#fff; 
 `;

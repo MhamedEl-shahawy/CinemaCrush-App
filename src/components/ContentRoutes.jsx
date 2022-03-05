@@ -1,6 +1,6 @@
 import {useState,useEffect} from "react";
 import { BrowserRouter as Router, Navigate,Routes, Route,useParams } from 'react-router-dom';
-import { Container,WrapperRoutes } from "./style/RoutesStyle";
+import { Container,WrapperRoutes,NavMob } from "./style/RoutesStyle";
 import Navbar from "./Navbar";
 import logo from "./images/logo.png"
 import MoviesShow from "./MoviesShow";
@@ -8,11 +8,13 @@ import MoviePlayer from "./MoviePlayer"
 import Artist from "./Artist";
 import MoviesGenres from "./MoviesGenres";
 import Footer from "./Footer";
-import {useSelector} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
+import {changeBar} from "../features/movies";
 function ContentRoutes({auth}) {
   const [image,setImage] = useState("");
   const imgUrl = useSelector((state)=> state.movies.img);
-
+  const barStatus = useSelector((state)=> state.movies.barStatus);
+  const dispatch = useDispatch();
   const {id} = useParams();
  
   if(auth == null || auth.token == null){
@@ -21,8 +23,9 @@ function ContentRoutes({auth}) {
   
   return (
        <Container>
+     
         <Navbar logo={logo}  />
-        <WrapperRoutes  urlImage={imgUrl}>
+        <WrapperRoutes  urlImage={imgUrl} onClick={()=> dispatch(changeBar(false))}>
           <Routes>
           <Route path='/' element={<MoviesShow  imageSetter={(url) => setImage(url) }  loadMoreUrl="https://api.themoviedb.org/3/movie/now_playing?page="  movieType={`https://api.themoviedb.org/3/movie/now_playing?page=1&api_key=${process.env.REACT_APP_APIKEY}`} />}  exact />
           <Route path='/popular' element={<MoviesShow imageSetter={(url) => setImage(url) } loadMoreUrl="https://api.themoviedb.org/3/discover/movie?page="  sort="&sort_by=popularity.desc"  titlePage="Popular Movies" movieType={`https://api.themoviedb.org/3/discover/movie?page=1&sort_by=popularity.desc&api_key=${process.env.REACT_APP_APIKEY}`}/>} />

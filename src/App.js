@@ -22,7 +22,8 @@ function App() {
        nav:"rgba(31, 38, 60,0.5)",
        nav2:"rgba(37, 37, 37,0.5)",
        bgHover:"rgba(0, 0, 0,1)",
-       navColor:"#4C5764"
+       navColor:"#4C5764",
+       bgMob:"rgba(37,37,37,1)"
      },
      mobile: '768px',
   }

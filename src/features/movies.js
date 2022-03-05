@@ -18,13 +18,16 @@ export const getMovies = createAsyncThunk(
   );
 const moviesSlice = createSlice({
     name:"movies",
-    initialState:{data:[],reviews:[],img:null,reviewsStatus:null,status: null},
+    initialState:{data:[],reviews:[],barStatus:false,img:null,reviewsStatus:null,status: null},
     reducers:{
         login:(state,action)=>{
             state.value = action.payload;
         },
         changeUrl:(state,action)=>{
           state.img = action.payload;
+      },
+      changeBar(state,action){
+         state.barStatus = (action.payload === false) ? false:!state.barStatus;
       }
 
     },
@@ -63,5 +66,5 @@ const moviesSlice = createSlice({
         },
       },
 });
-export const {login,changeUrl} = moviesSlice.actions
+export const {login,changeUrl,changeBar} = moviesSlice.actions
 export default moviesSlice.reducer;

@@ -6,6 +6,12 @@ export const Header = styled.header`
    position: -webkit-sticky;
 position: sticky;
 top:0;
+z-index:9999;
+@media (max-width:1000px){
+   background-color:${({theme})=> theme.colors.bgMob};      
+
+}
+
 
 `;
 export const Nav = styled.nav`
@@ -14,10 +20,10 @@ export const Nav = styled.nav`
    height:100%;
    background-color:${({theme})=> theme.colors.nav2};      
    padding:1em 0;
+   z-index:9999;
   
          @media (max-width:999px){
             display:block;
-                 text-align: center;
                  padding:0;
                 padding: 1.5em 0;
                 
@@ -29,8 +35,18 @@ export const Nav = styled.nav`
 export const LogoContainer = styled.div`
   width: 100%;
   padding-left: 1.1em;
+  @media (max-width:1000px){
+   display: flex;
+  justify-content: space-between;
+  padding-right: 1em;
   
-  text-align:center;
+  }
+  @media (min-width:1000px){
+  text-align: center;
+  background-color:${({theme})=> theme.colors.nav2};      
+
+  }
+ 
 `;
 export const Img = styled.img`
 max-width: 100%;
@@ -96,7 +112,20 @@ export const IntroDesc = styled.p`
    color:${({theme})=> theme.colors.primary};
    line-height:1.5;
 `;
+export const Bar = styled.div`
+cursor: pointer;
+@media (min-width:1000px){
+    display: none;
+}
+`;
 
-
-
+export const ListContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color:${({theme})=> theme.colors.bgMob};      
+  @media (max-width:1000px){
+     display: ${({bar})=> bar ? "block":"none"};
+     margin-top:1em;
+  }
+`;
 //HeadIntro,Title,IntroDesc
