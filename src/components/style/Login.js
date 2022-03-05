@@ -16,6 +16,12 @@ export const Form = styled.form`
  padding: 1em;
  border-radius: 10px;
 position:relative;
+@media  (min-width:600px) and (max-width:900px){
+   width: 45%;
+}
+@media  (max-width:600px){
+  width: 70%;
+}
 `;
 export const LogoWrapper = styled.div`
    width:100%;

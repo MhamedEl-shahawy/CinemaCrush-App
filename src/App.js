@@ -6,13 +6,14 @@ import {WrapperContainer,Bg} from "./components/style/WrapperContainer.js";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import ContentRoutes  from './components/ContentRoutes.jsx';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import {setToken} from "./features/auth";
 function App() {
   const [image,setImage] = useState("");
   const {id} = useParams();
+  const dispatch = useDispatch();
   const [auth,setAuth] = useState(JSON.parse(localStorage.getItem("cinema")) || {status:false,token:""});
   const [authWrap,setAuthWrap] = useState(false);
-  const [token,setToken] = useState(null);
 
   const theme = {
      colors:{
@@ -28,11 +29,11 @@ function App() {
      mobile: '768px',
   }
 
-  let checkingToken = ()=>{
-    let authToken = JSON.parse(localStorage.getItem("cinemaCrush"));   
-    return authToken;
-  }
-
+  // let checkingToken = ()=>{
+  //   let authToken = JSON.parse(localStorage.getItem("cinemaCrush"));   
+  //   console.log(authToken)
+    
+  // }
 
   return (
        <Router>
@@ -41,7 +42,7 @@ function App() {
         <Bg></Bg>
         <WrapperContainer>
           <Routes>
-          <Route  exact path="/*"  element={<ContentRoutes auth={checkingToken()}/>}/>
+          <Route  exact path="/*"  element={<ContentRoutes/>}/>
           <Route path='/login' element={<Login/>}  />
           <Route path='/signup' element={<Signup/>} />
 

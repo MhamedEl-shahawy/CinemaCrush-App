@@ -20,10 +20,13 @@ export const getLoginToken = createAsyncThunk(
   );
 const authSlice = createSlice({
     name:"auth",
-    initialState:{data:[],statusInfo: null},
+    initialState:{data:[],statusInfo: null,token:null,localToken:null},
     reducers:{
         login:(state,action)=>{
             state.data = action.payload;
+        },
+        setToken:(state,action)=>{
+          state.localToken = action.token;  
         }
     },
     extraReducers: {
@@ -33,7 +36,7 @@ const authSlice = createSlice({
         [getLoginToken.fulfilled]: (state, action) => {
           state.statusInfo = "success";
           state.token = action.payload.user["accessToken"];
-          
+           state.localToken = action.payload.user["accessToken"];
 
         },
         [getLoginToken.rejected]: (state, action) => {
@@ -41,5 +44,5 @@ const authSlice = createSlice({
         },
       },
 });
-// export const {getLoginToken} = authSlice.actions
+export const {setToken} = authSlice.actions
 export default authSlice.reducer;

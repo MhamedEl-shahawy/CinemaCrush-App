@@ -6,7 +6,7 @@ export const Header = styled.header`
    position: -webkit-sticky;
 position: sticky;
 top:0;
-z-index:9999;
+z-index:999;
 @media (max-width:1000px){
    background-color:${({theme})=> theme.colors.bgMob};      
 

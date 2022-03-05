@@ -28,7 +28,7 @@ import {getLoginToken} from "../features/auth"
             localStorage.setItem("cinemaCrush",JSON.stringify({token:db.payload?.user["accessToken"]})); 
               setTimeout(()=>{
                 navigate("/");
-              },3000);
+              },1000);
          
          } else {
           localStorage.removeItem("cinemaCrush");

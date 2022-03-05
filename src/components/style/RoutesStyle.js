@@ -14,12 +14,15 @@ position: relative;
 export const WrapperRoutes = styled.div`
 width: 100%;
 height: 100%;
-padding: 1em;
+
 background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     background-image: url(${({urlImage})=>urlImage});
     background-color:${({theme})=>theme.colors.main}; 
+    @media (min-width:1000px){
+  padding: 1em;
+}
 `;
 export const NavMob = styled.nav`
   width: 100%;
